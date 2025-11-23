@@ -1,0 +1,8 @@
+{
+    "name": "@nwpu-sw-2025/shared-treaty",
+    "version": "1.0.0",
+    "type": "module",
+    "exports": {
+        ".": "./index.ts"
+    }
+}
