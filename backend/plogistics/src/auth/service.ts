@@ -28,7 +28,8 @@ export abstract class AuthService {
 
     const { token, refreshToken } = await AuthUtil.generateToken(
       user.id,
-      user.email
+      user.email,
+      'USER'
     );
 
     return {
@@ -67,7 +68,7 @@ export abstract class AuthService {
     ) as jwt.JwtPayload;
 
     const { token, refreshToken: newRefreshToken } =
-      await AuthUtil.generateToken(decoded.userId, decoded.email);
+      await AuthUtil.generateToken(decoded.userId, decoded.email, decoded.role);
 
     return {
       message: 'Credentials refreshed successfully',

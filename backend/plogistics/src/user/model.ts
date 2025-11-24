@@ -1,4 +1,5 @@
 import { t } from 'elysia';
+import { UserPlain } from '../generated/prismabox/User';
 
 export namespace UserModel {
   export const updateUserPasswordBody = t.Object({
@@ -53,4 +54,25 @@ export namespace UserModel {
 
   export type updateUserRoleFailureResponse =
     typeof updateUserRoleFailureResponse.static;
+
+  export const getUserProfileParams = t.Object({
+    userId: t.Optional(t.Number()),
+  });
+
+  export type getUserProfileParams = typeof getUserProfileParams.static;
+
+  export const getUserProfileSuccessResponse = t.Object({
+    message: t.Literal('User profile fetched successfully'),
+    ...t.Omit(UserPlain, ['password']).properties,
+  });
+
+  export type getUserProfileSuccessResponse =
+    typeof getUserProfileSuccessResponse.static;
+
+  export const getUserModelFailureResponse = t.Object({
+    message: t.Literal('User not found'),
+  });
+
+  export type getUserModelFailureResponse =
+    typeof getUserModelFailureResponse.static;
 }

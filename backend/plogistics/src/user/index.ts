@@ -34,4 +34,19 @@ export const user = new Elysia({ prefix: '/user' })
         401: CommonModel.unauthorizedResponse,
       },
     }
+  )
+  .get(
+    'profile/:userId?',
+    async ({ params, headers }) => {
+      return await UserService.getUserProfile(params, headers);
+    },
+    {
+      params: UserModel.getUserProfileParams,
+      headers: CommonModel.authorizationHeader,
+      response: {
+        200: UserModel.getUserProfileSuccessResponse,
+        400: UserModel.getUserModelFailureResponse,
+        401: CommonModel.unauthorizedResponse,
+      },
+    }
   );

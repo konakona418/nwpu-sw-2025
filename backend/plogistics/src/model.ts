@@ -2,13 +2,15 @@ import { t } from 'elysia';
 
 export namespace CommonModel {
   export const unauthorizedResponse = t.Object({
-    message: t.Literal('Invalid credentials or the credentials are expired'),
+    message: t.Literal(
+      'Invalid credentials or the credentials are expired, or you have no access to this resource'
+    ),
   });
 
   export type unauthorizedResponse = typeof unauthorizedResponse.static;
 
   export const authorizationHeader = t.Object({
-    'X-Authorization': t.String(),
+    authorization: t.Optional(t.String()),
   });
 
   export type authorizationHeader = typeof authorizationHeader.static;
@@ -17,5 +19,6 @@ export namespace CommonModel {
     userId: number;
     email: string;
     iat: number;
+    role?: 'ADMIN' | 'USER';
   };
 }

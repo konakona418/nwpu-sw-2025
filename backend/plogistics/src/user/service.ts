@@ -7,7 +7,7 @@ import { AuthUtil } from '../util/auth';
 
 export abstract class UserService {
   private static async getUserIdFromAuthorizationHeader(
-    jwt: string
+    jwt: string | undefined
   ): Promise<number> {
     const { userId } = await AuthUtil.decodeToken<CommonModel.JwtPayload>(
       jwt
@@ -19,9 +19,10 @@ export abstract class UserService {
     });
     return userId;
   }
+
   static async updateUserPassword(
     { oldPassword, newPassword }: UserModel.updateUserPasswordBody,
-    { 'X-Authorization': authorization }: CommonModel.authorizationHeader
+    { authorization }: CommonModel.authorizationHeader
   ) {
     const userId = await this.getUserIdFromAuthorizationHeader(authorization);
 
@@ -45,7 +46,7 @@ export abstract class UserService {
 
   static async updateUserRole(
     { newRole }: UserModel.updateUserRoleBody,
-    { 'X-Authorization': authorization }: CommonModel.authorizationHeader
+    { authorization }: CommonModel.authorizationHeader
   ) {
     if (newRole === 'ADMIN') {
       throw status(400, {
@@ -73,5 +74,32 @@ export abstract class UserService {
     return {
       message: 'User role updated successfully',
     } satisfies UserModel.updateUserRoleSuccessResponse;
+  }
+
+  static async getUserProfile(
+    { userId }: UserModel.getUserProfileParams,
+    { authorization }: CommonModel.authorizationHeader
+  ) {
+    if (!userId) {
+      userId = await this.getUserIdFromAuthorizationHeader(authorization);
+    }
+
+    const user = await db.user.findUnique({
+      where: { id: userId },
+      omit: {
+        password: true,
+      },
+    });
+
+    if (!user) {
+      throw status(400, {
+        message: 'User not found',
+      } satisfies UserModel.getUserModelFailureResponse);
+    }
+
+    return {
+      message: 'User profile fetched successfully',
+      ...user,
+    } satisfies UserModel.getUserProfileSuccessResponse;
   }
 }
