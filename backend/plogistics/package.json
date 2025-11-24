@@ -10,13 +10,18 @@
     "prisma:g": "prisma generate",
     "prisma:generate": "prisma generate",
     "prisma:m": "prisma migrate dev",
-    "prisma:migrate": "prisma migrate dev"
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:f": "prisma format",
+    "prisma:format": "prisma format"
   },
   "dependencies": {
     "@elysiajs/eden": "^1.4.5",
     "@prisma/adapter-pg": "^7.0.0",
     "@prisma/client": "^7.0.0",
+    "@types/jsonwebtoken": "^9.0.10",
     "elysia": "latest",
+    "jsonwebtoken": "^9.0.2",
+    "neverthrow": "^8.2.0",
     "prismabox": "^1.1.25"
   },
   "devDependencies": {

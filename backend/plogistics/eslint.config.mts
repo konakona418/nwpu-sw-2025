@@ -28,6 +28,19 @@ export default defineConfig([
     ],
     rules: {
       'prettier/prettier': 'warn',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          args: 'all',
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrors: 'all',
+          caughtErrorsIgnorePattern: '^_',
+          destructuredArrayIgnorePattern: '^_',
+          ignoreRestSiblings: true,
+        },
+      ],
+      '@typescript-eslint/no-namespace': 'off',
     },
     plugins: {
       js,
@@ -36,6 +49,6 @@ export default defineConfig([
     },
   },
   {
-    ignores: ['node_modules', 'dist', '**/*.d.ts'],
+    ignores: ['node_modules', 'dist'],
   },
 ]);

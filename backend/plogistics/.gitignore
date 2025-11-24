@@ -6,6 +6,9 @@
 # generated files
 /src/generated
 
+# prisma migrations
+/prisma/migrations
+
 # dependencies
 /node_modules
 /.pnp

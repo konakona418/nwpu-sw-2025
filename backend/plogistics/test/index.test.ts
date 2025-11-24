@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'bun:test';
-import { edenTreaty } from '@elysiajs/eden';
+import { treaty } from '@elysiajs/eden';
 
 import { App, appLocalPort } from '../src/index.js';
 
 const address = `localhost:${appLocalPort}`;
-const client = edenTreaty<App>(address);
+const client = treaty<App>(address);
 
 describe('index test', () => {
   it('test health', async () => {
